@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 from population import Population
-from plotting import Plot
+from plotting import AnimatedPlot
 
 #-------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -12,7 +12,7 @@ def run():
 
     nPrey0 = random.randint(1,101)
     nPredator0 = random.randint(1,101)
-    population = Population(nPrey0, nPredator0, 0.01, 5000)
+    population = Population(nPrey0, nPredator0, 0.01, 10000)
     population.simulate()
     
     print('--------------------------------------------------------------------')
@@ -22,7 +22,7 @@ def run():
     print('Start:  {}   End:  {}'.format(population.predator[0],round(population.predator[-1])))
     print('--------------------------------------------------------------------')
 
-    Plot(population)
+    AnimatedPlot(population)
 
 #-------------------------------------------------------------------------------------------------------------------------------------------
 

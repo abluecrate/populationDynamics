@@ -3,7 +3,7 @@ from matplotlib import animation
 
 #-------------------------------------------------------------------------------------------------------------------------------------------
 
-def Plot(population):
+def AnimatedPlot(population):
     fig, ax = plt.subplots()
     ax1 = plt.axes(xlim = (0, population.cycles + 10), 
                    ylim = (0, max(max(population.prey), max(population.predator)) + 10))
