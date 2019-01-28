@@ -7,6 +7,7 @@ def AnimatedPlot(population):
     fig, ax = plt.subplots()
     ax1 = plt.axes(xlim = (0, population.cycles + 10), 
                    ylim = (0, max(max(population.prey), max(population.predator)) + 10))
+    ax1.legend
     line, = ax1.plot([], [], lw = 1)
     plt.title('PREDATOR v PREY')
     plt.xlabel('Cycle')
@@ -46,6 +47,7 @@ def AnimatedPlot(population):
             line.set_data(xlist[lnum], ylist[lnum])
         return lines
 
+    plt.legend(lines, ['Prey', 'Predators'], loc = 'best')
     frames = population.cycles
     anim = animation.FuncAnimation(fig, animate, init_func = init, frames = frames, repeat = False, interval = 1, blit = True)
     # plt.grid()
