@@ -14,12 +14,13 @@ class Population(object):
         self.cycles = cycles
         # self.timeSpace = range(0,self.cycles)
 
-    def simulate(self):
-        for t in range(0, self.cycles):
-            nPrey = self.prey[t] + self.dTime*(self.preyBR*self.prey[t] - self.preyDR*self.prey[t]*self.predator[t])
-            nPredator = self.predator[t] + self.dTime*(self.predatorBR*self.predator[t]*self.prey[t] - self.predatorDR*self.predator[t])
-            self.prey.append(nPrey)
-            self.predator.append(nPredator)
+    def simulate(self, method):
+        if method.upper() in ['LOTKAVOLTERRA','LV']:
+            for t in range(0, self.cycles):
+                nPrey = self.prey[t] + self.dTime*(self.preyBR*self.prey[t] - self.preyDR*self.prey[t]*self.predator[t])
+                nPredator = self.predator[t] + self.dTime*(self.predatorBR*self.predator[t]*self.prey[t] - self.predatorDR*self.predator[t])
+                self.prey.append(nPrey)
+                self.predator.append(nPredator)
 
 #-------------------------------------------------------------------------------------------------------------------------------------------
 

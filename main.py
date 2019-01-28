@@ -13,7 +13,7 @@ def run():
     nPrey0 = random.randint(1,101)
     nPredator0 = random.randint(1,101)
     population = Population(nPrey0, nPredator0, 0.01, 10000)
-    population.simulate()
+    population.simulate('LotkaVolterra')
     
     print('--------------------------------------------------------------------')
     print('PREY:')
@@ -47,6 +47,7 @@ if __name__ == '__main__':
 
 # Population Dynamics
 # https://nrich.maths.org/7252
+# https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations
 # https://www.digitalbiologist.com/blog/2018/9/a-population-dynamics-model-in-five-lines-of-python
 #
 # Animating Lines
