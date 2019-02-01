@@ -46,6 +46,7 @@ if __name__ == '__main__':
 #-------------------------------------------------------------------------------------------------------------------------------------------
 
 # Population Dynamics
+# http://tbb.bio.uu.nl/rdb/books.html
 # https://nrich.maths.org/7252
 # https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations
 # https://www.digitalbiologist.com/blog/2018/9/a-population-dynamics-model-in-five-lines-of-python
