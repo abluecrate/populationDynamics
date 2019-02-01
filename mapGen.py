@@ -43,3 +43,4 @@ def genNoise(mHeight, mWidth):
 
 # https://medium.com/inspired-to-program-%E3%85%82-%D9%88-%CC%91%CC%91/procedural-generation-in-python-7b75127b2f74
 # http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels
+# https://stackoverflow.com/questions/17779480/python-random-map-generation-with-perlin-noise
