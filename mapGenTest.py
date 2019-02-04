@@ -1,4 +1,6 @@
 import random
+import numpy as np
+import matplotlib.pyplot as plt
 
 def genNoise(mHeight, mWidth):
     noiseMap = []
@@ -38,6 +40,12 @@ def genNoise(mHeight, mWidth):
             noiseMap[y][x] = (noiseMap[y][x] - bottomRange)/diff
 
     return noiseMap
+
+map = genNoise(100,100)
+
+fig, ax = plt.subplots()
+ax.matshow(map, cmap = plt.cm.Blues)
+plt.show()
 
 # REFERENCES
 
