@@ -45,6 +45,8 @@ Genetic Algorithm
 https://natureofcode.com/book/chapter-9-the-evolution-of-code/
 
 Map Generation
+https://medium.com/@yvanscher/playing-with-perlin-noise-generating-realistic-archipelagos-b59f004d8401
+https://medium.com/@travall/procedural-2d-island-generation-noise-functions-13976bddeaf9
 https://www.youtube.com/watch?v=xTOs6Zh_2Sg
 http://www.evilscience.co.uk/map-generator/
 https://medium.com/inspired-to-program-%E3%85%82-%D9%88-%CC%91%CC%91/procedural-generation-in-python-7b75127b2f74
@@ -52,6 +54,14 @@ http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generatin
 http://www.roguebasin.com/index.php?title=Python
 https://www.reddit.com/r/roguelikedev/comments/6vuw7i/faq_fridays_revisited_22_map_generation/
 https://stackoverflow.com/questions/17779480/python-random-map-generation-with-perlin-noise
+
+Plotting
+https://matplotlib.org/gallery.html
+https://scipy-cookbook.readthedocs.io/items/LoktaVolterraTutorial.html
+
+Agent Based Modeling
+https://mesa.readthedocs.io/en/latest/#
+https://en.wikipedia.org/wiki/Agent-based_model
 
 Animating Lines
 https://stackoverflow.com/questions/28074461/animating-growing-line-plot-in-python-matplotlib
@@ -87,3 +97,8 @@ The classic (and best-known) form of a radiodrome is known as the "dog curve";
 this is the path a dog follows when it swims across a stream with a current after food it has spotted on the other side. 
 Because the dog drifts downwards with the current, it will have to change its heading; 
 it will also have to swim further than if it had computed the optimal heading.
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+ISLAND GENERATION
+
