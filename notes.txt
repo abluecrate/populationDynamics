@@ -1,9 +1,48 @@
+TOPICS TO WORK ON:
+
+Map Generation
+    - Random Generation
+        - Island
+        - Biome Generation
+            - Food Distribution
+        - Rivers?
+    - Populate Land
+        - Population Distribution
+
+Population Dynamics
+    - Cellular Automata
+        - Rules of Survival
+            - Predator Hunts Prey
+            - Prey Hunts Food / Avoid Predators
+    - Pathfinding
+        - Area Search
+        - Dynamic A* Paths (D*)
+        - Radiodrome / Dog Curves
+
+    Advanced / Future
+    - Genetic Algorithms
+    - Neural Networks
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
 REFERENCES
+
+Population Dynamics
+http://tbb.bio.uu.nl/rdb/books.html
+https://nrich.maths.org/7252
+https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations
+https://www.digitalbiologist.com/blog/2018/9/a-population-dynamics-model-in-five-lines-of-python
 
 Cellular Automation
 https://www.wolframscience.com/nks/
 https://en.wikipedia.org/wiki/Cellular_automaton
 https://en.wikipedia.org/wiki/Taxicab_geometry
+
+Pathfinding
+https://en.wikipedia.org/wiki/Radiodrome - Dog Curves
+
+Genetic Algorithm
+https://natureofcode.com/book/chapter-9-the-evolution-of-code/
 
 Map Generation
 https://www.youtube.com/watch?v=xTOs6Zh_2Sg
@@ -13,12 +52,6 @@ http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generatin
 http://www.roguebasin.com/index.php?title=Python
 https://www.reddit.com/r/roguelikedev/comments/6vuw7i/faq_fridays_revisited_22_map_generation/
 https://stackoverflow.com/questions/17779480/python-random-map-generation-with-perlin-noise
-
-Population Dynamics
-http://tbb.bio.uu.nl/rdb/books.html
-https://nrich.maths.org/7252
-https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations
-https://www.digitalbiologist.com/blog/2018/9/a-population-dynamics-model-in-five-lines-of-python
 
 Animating Lines
 https://stackoverflow.com/questions/28074461/animating-growing-line-plot-in-python-matplotlib
@@ -44,3 +77,13 @@ Class 3:    Nearly all initial patterns evolve in a pseudo-random or chaotic man
 Class 4:    Nearly all initial patterns evolve into structures that interact in complex and interesting ways, 
             with the formation of local structures that are able to survive for long periods of time. 
             
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+DOG CURVES
+(Predator Chasing Prey)
+
+In geometry, a radiodrome is the pursuit curve followed by a point that is pursuing another linearly-moving point. 
+The classic (and best-known) form of a radiodrome is known as the "dog curve"; 
+this is the path a dog follows when it swims across a stream with a current after food it has spotted on the other side. 
+Because the dog drifts downwards with the current, it will have to change its heading; 
+it will also have to swim further than if it had computed the optimal heading.
