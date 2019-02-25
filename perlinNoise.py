@@ -87,9 +87,9 @@ noiseMap = perlin_noise(mapY, mapX, 4, seed)
 
 circleGradient = calculateCircleGradient(noiseMap)
 
-map = (noiseMap * circleGradient)**2
+map = noiseMap * (circleGradient)**2
 
-landMap = map >= 0.1
+landMap = map >= 0.115
 
 print('-----------------------------------------------------------------')
 
