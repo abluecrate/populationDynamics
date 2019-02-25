@@ -69,39 +69,34 @@ def calculateCircleGradient(mapArray):
     # distanceFromCenter = cdist(mapArray, np.atleast_2d(centerPoint)).ravel()
     # distanceFromCenter = np.sqrt(((oGrid - centerPoint)**2).sum(1)).mean()
 
-    return ((distanceFromCenter - mn) / (mx - mn))
+    return ((distanceFromCenter - mn) / (mx - mn))**2
 
 def plotMap(map, ax, colorMap = plt.cm.Greys):
     ax.matshow(map, cmap = colorMap)
 
-print('-----------------------------------------------------------------')
+def generateIsland(sizeX, sizeY, seed):
 
-seed = None
+    noiseMap = perlin_noise(sizeY, sizeY, 4, seed)
 
-mapX = 128
-mapY = 128
+    # moistureMap = perlin_noise(64, 64, 2)
 
-noiseMap = perlin_noise(mapY, mapX, 4, seed)
+    circleGradient = calculateCircleGradient(noiseMap)
 
-# moistureMap = perlin_noise(64, 64, 2)
+    map = noiseMap * circleGradient
 
-circleGradient = calculateCircleGradient(noiseMap)
+    landMap = map >= 0.115
 
-map = noiseMap * (circleGradient)**2
+    plt.close('all')
+    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2,2)
+    plotMap(noiseMap, ax1)
+    plotMap(circleGradient, ax2)
+    plotMap(map, ax3, plt.cm.terrain)
+    plotMap(landMap, ax4)
+    # ax1.matshow(noiseMap, cmap = plt.cm.Greys)
+    # ax2.matshow(circleGradient, cmap = plt.cm.Greys)
+    # ax3.matshow(map, cmap = plt.cm.terrain)
+    # ax4.matshow(landMap, cmap = plt.cm.terrain)
+    plt.show()
 
-landMap = map >= 0.115
-
-print('-----------------------------------------------------------------')
-
-plt.close('all')
-fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2,2)
-plotMap(noiseMap, ax1)
-plotMap(circleGradient, ax2)
-plotMap(map, ax3, plt.cm.terrain)
-plotMap(landMap, ax4)
-# ax1.matshow(noiseMap, cmap = plt.cm.Greys)
-# ax2.matshow(circleGradient, cmap = plt.cm.Greys)
-# ax3.matshow(map, cmap = plt.cm.terrain)
-# ax4.matshow(landMap, cmap = plt.cm.terrain)
-plt.show()
+    return map, landMap
 
