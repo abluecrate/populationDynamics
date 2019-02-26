@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 def getGradient(seed):
     seed and np.random.seed(seed)
     gradient = np.random.rand(512, 512, 2) * 2 - 1
@@ -10,7 +9,7 @@ def getGradient(seed):
 def fade(values):
     return 6*values**5 - 15*values**4 + 10*values**3
 
-def perlin_noise(sizeX, sizeY, frequency, seed = None):
+def perlinNoise(sizeX, sizeY, frequency, seed = None):
 
     gradient = getGradient(seed)
     
@@ -76,7 +75,7 @@ def plotMap(map, ax, colorMap = plt.cm.Greys):
 
 def generateIsland(sizeX, sizeY, seed):
 
-    noiseMap = perlin_noise(sizeY, sizeY, 4, seed)
+    noiseMap = perlinNoise(sizeY, sizeY, 4, seed)
 
     # moistureMap = perlin_noise(64, 64, 2)
 
@@ -92,10 +91,12 @@ def generateIsland(sizeX, sizeY, seed):
     plotMap(circleGradient, ax2)
     plotMap(map, ax3, plt.cm.terrain)
     plotMap(landMap, ax4)
+
     # ax1.matshow(noiseMap, cmap = plt.cm.Greys)
     # ax2.matshow(circleGradient, cmap = plt.cm.Greys)
     # ax3.matshow(map, cmap = plt.cm.terrain)
     # ax4.matshow(landMap, cmap = plt.cm.terrain)
+
     plt.show()
 
     return map, landMap
