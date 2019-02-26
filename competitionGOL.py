@@ -13,7 +13,7 @@ class Population(object):
     def __init__(self, map, populationType, seed = None):
         self.size = (map.sizeY, map.sizeX)
         seed and np.random.seed(seed)
-        self.state = np.random.randint(2, size = self.size)
+        self.state = np.random.randint(2, size = self.size) & map.landIndex
         self.populationType = populationType
         self.engine = Engine(self, map)
         self.iteration = 0
@@ -204,7 +204,7 @@ def animate(prey, predators, plants, map):
             imPrey = ax1.imshow(prey.state, vmin = 0, vmax = 2)
             imPredators = ax2.imshow(predators.state, vmin = 0, vmax = 2)
             imPlants = ax3.imshow(plants.state, vmin = 0, vmax = 2)
-            
+
             plt.show()
 
         else:
