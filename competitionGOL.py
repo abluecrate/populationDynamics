@@ -1,50 +1,22 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-import argparse
-import time
-
 #------------------------------------------------------------------------------------------------
 #################################################################################################
 #------------------------------------------------------------------------------------------------
-
-# class Board(object):
-#     def __init__(self, size, seed = 'Random'):
-#         if seed == 'Random':
-#             self.state = np.random.randint(2, size = size)
-#         self.engine = Engine(self)
-#         self.iteration = 0
-
-#     def animate(self):
-#         i = self.iteration
-#         im = None
-#         plt.title("Conway's Game of Life")
-#         while True:
-#             if i == 0:
-#                 plt.ion()
-#                 im = plt.imshow(self.state, vmin = 0, vmax = 2)
-#             else:
-#                 im.set_data(self.state)
-#             i += 1
-#             self.engine.applyRules()
-#             # print('Life Cycle:  {}    Birth:  {}    Survive:  {}'.format(i, self.engine.nBirth, self.engine.nSurvive))
-#             plt.pause(0.01)
-#             yield self
-
+# CLASSES
 #------------------------------------------------------------------------------------------------
 #################################################################################################
 #------------------------------------------------------------------------------------------------
 
 class Population(object):
-    def __init__(self, sizeX, sizeY, populationType, seed = None):
-        # if seed == 'Random':
-        #     self.state = np.random.randint(2, size = size)
-        self.size = (sizeY, sizeX)
+    def __init__(self, map, populationType, seed = None):
+        self.size = (map.sizeY, map.sizeX)
         seed and np.random.seed(seed)
         self.state = np.random.randint(2, size = self.size)
         self.populationType = populationType
-        self.engine = Engine(self)
-        # self.iteration = 0
+        self.engine = Engine(self, map)
+        self.iteration = 0
 
 #------------------------------------------------------------------------------------------------
 #################################################################################################
@@ -137,9 +109,11 @@ class Map(object):
 #------------------------------------------------------------------------------------------------
 
 class Engine(object):
-    def __init__(self, population):
+    def __init__(self, population, map):
         self.state = population.state
         self.populationType = population.populationType
+        self.landMap = map.landMap
+        self.landIndex = map.landIndex
 
     def countNeighbors(self):
         state = self.state
@@ -148,96 +122,127 @@ class Engine(object):
              state[2:,1:-1] + state[2:,2:])
         return n   
 
-    # def applyRules(self):
-        # if self.populationType == 'Prey':
-        #     state = self.preyRules()
-        # elif self.populationType == 'Predator':
-        #     state = self.predatorRules()
-        # elif self.populationType == 'Plant':
-        #     state = self.plantRules()
-        # return state
+    def applyRules(self):
+        if self.populationType == 'Prey':
+            state = self.preyRules()
+        elif self.populationType == 'Predator':
+            state = self.predatorRules()
+        elif self.populationType == 'Plant':
+            state = self.plantRules()
+        return state
 
-    # def preyRules(self):
-        # n = self.countNeighbors() 
-        # state = self.state
+    def preyRules(self):
+        n = self.countNeighbors() 
+        state = self.state
 
-        # birth = (n == 3) & (state[1:-1,1:-1] == 0)
-        # survive = ((n == 2) | (n == 3)) & (state[1:-1,1:-1] == 1)
-        # state[...] = 0
-        # state[1:-1,1:-1][birth | survive] = 1
-
-        # nBirth = np.sum(birth)
-        # self.nBirth = nBirth
-        # nSurvive = np.sum(survive)
-        # self.nSurvive = nSurvive
-
-        # return state
-
-    # def predatorRules(self):
-        # n = self.countNeighbors() 
-        # state = self.state
-
-        # birth = (n == 3) & (state[1:-1,1:-1] == 0)
-        # survive = ((n == 2) | (n == 3)) & (state[1:-1,1:-1] == 1)
-        # state[...] = 0
-        # state[1:-1,1:-1][birth | survive] = 1
+        birth = (n == 3) & (state[1:-1,1:-1] == 0)
+        survive = ((n == 2) | (n == 3)) & (state[1:-1,1:-1] == 1) & (self.landIndex[1:-1,1:-1] == 1)
+        state[...] = 0
+        state[1:-1,1:-1][birth | survive] = 1
 
         # nBirth = np.sum(birth)
         # self.nBirth = nBirth
         # nSurvive = np.sum(survive)
         # self.nSurvive = nSurvive
 
-        # return state
+        return state
 
-    # def plantRules(self):
-        # n = self.countNeighbors() 
-        # state = self.state
-        
+    def predatorRules(self):
+        n = self.countNeighbors() 
+        state = self.state
 
+        birth = (n == 3) & (state[1:-1,1:-1] == 0)
+        survive = ((n == 2) | (n == 3)) & (state[1:-1,1:-1] == 1)& (self.landIndex[1:-1,1:-1] == 1)
+        state[...] = 0
+        state[1:-1,1:-1][birth | survive] = 1
+
+        # nBirth = np.sum(birth)
+        # self.nBirth = nBirth
+        # nSurvive = np.sum(survive)
+        # self.nSurvive = nSurvive
+
+        return state
+
+    def plantRules(self):
+        n = self.countNeighbors() 
+        state = self.state
+
+        birth = (n == 3) & (state[1:-1,1:-1] == 0)
+        survive = ((n == 2) | (n == 3)) & (state[1:-1,1:-1] == 1) & (self.landIndex[1:-1,1:-1] == 1)
+        state[...] = 0
+        state[1:-1,1:-1][birth | survive] = 1 
+
+        # nBirth = np.sum(birth)
+        # self.nBirth = nBirth
+        # nSurvive = np.sum(survive)
+        # self.nSurvive = nSurvive
+
+        return state
+
+#------------------------------------------------------------------------------------------------
+#################################################################################################
+#------------------------------------------------------------------------------------------------   
+# FUNCTIONS     
+#------------------------------------------------------------------------------------------------
+#################################################################################################
+#------------------------------------------------------------------------------------------------   
+
+def animate(prey, predators, plants, map):
+    i = 0
+    imPrey = None
+    imPredators = None
+    imPlants = None
+
+    while True:
+        if i == 0:
+            plt.ion()
+            fig, (ax1, ax2, ax3) = plt.subplots(1,3)
+            ax1.set_title('Prey')
+            ax2.set_title('Predators')
+            ax3.set_title('Plants')
+
+            imPrey = ax1.imshow(prey.state, vmin = 0, vmax = 2)
+            imPredators = ax2.imshow(predators.state, vmin = 0, vmax = 2)
+            imPlants = ax3.imshow(plants.state, vmin = 0, vmax = 2)
+            
+            plt.show()
+
+        else:
+            imPrey.set_data(prey.state)
+            imPredators.set_data(predators.state)
+            imPlants.set_data(plants.state)
+
+        i += 1
+
+        prey.engine.applyRules()
+        predators.engine.applyRules()
+        plants.engine.applyRules()
+
+        # print('Life Cycle:  {}    Birth:  {}    Survive:  {}'.format(i, self.engine.nBirth, self.engine.nSurvive))
+
+        plt.pause(0.01)
+
+        yield prey, predators, plants
+
+
+#------------------------------------------------------------------------------------------------
+#################################################################################################
+#------------------------------------------------------------------------------------------------
+# MAIN
 #------------------------------------------------------------------------------------------------
 #################################################################################################
 #------------------------------------------------------------------------------------------------
 
 def main():
 
-    # ap = argparse.ArgumentParser(add_help = False)  # Intilialize Argument Parser
-    # ap.add_argument('-h', '--height', help = 'Board Height', default = 256)
-    # ap.add_argument('-w', '--width', help = 'Board Width', default = 256)
-    # args = vars(ap.parse_args())    # Gather Arguments
+    island = Map(256,256)
 
-    # bHeight = int(args['height'])
-    # bWidth = int(args['width'])
+    prey = Population(island, 'Prey')
+    predators = Population(island, 'Predator')
+    plants = Population(island, 'Plant')
 
-    # board = Board()
-    # for _ in board.animate():
-    #     pass
-
-    mapX = 256
-    mapY = 256
-
-    island = Map(mapX, mapY)
-
-    prey = Population(mapX, mapY, 'Prey')
-    predators = Population(mapX, mapY, 'Predator')
-    plants = Population(mapX, mapY, 'Plant')
-
-    # fig, (ax1, ax2, ax3) = plt.subplots(1,3)
-    # ax1.matshow(prey.state)
-    # ax2.matshow(predators.state)
-    # ax3.matshow(plants.state)
-    # plt.show()
-
-    # plt.close('all')
-    # fig, (ax1, ax2) = plt.subplots(1,2)
-    # ax1.matshow(test.landMap)
-    # ax2.matshow(test.landIndex)
-
-    # ax1.matshow(noiseMap, cmap = plt.cm.Greys)
-    # ax2.matshow(circleGradient, cmap = plt.cm.Greys)
-    # ax3.matshow(map, cmap = plt.cm.terrain)
-    # ax4.matshow(landMap, cmap = plt.cm.terrain)
-    
-    # plt.show()
+    for _ in animate(prey, predators, plants, island):
+        pass
 
 #------------------------------------------------------------------------------------------------
 #################################################################################################
