@@ -22,6 +22,19 @@ class Population(object):
 #################################################################################################
 #------------------------------------------------------------------------------------------------
 
+# ISLAND GENERATION METHOD
+
+# 1. Generate Low Frequency Perlin Noise
+#       |--> Establishes Random Height Map
+# 2. Apply Circular Gradient
+#       |--> Land Bias Toward Center of Map - Guarantees Water Edge
+#               |--> Ensures Array "Border" - Eases Neighbor Calculation
+# 3. Establish Land Index
+# 4. (Possible) Generate 2nd Perlin Noise Layer
+#       |--> Moisture Map - Biome Generation?
+
+#------------------------------------------------------------------------------------------------
+
 class Map(object):
     def __init__(self, sizeX, sizeY, seed = None):
         self.sizeX = sizeX
@@ -108,6 +121,27 @@ class Map(object):
 #################################################################################################
 #------------------------------------------------------------------------------------------------
 
+# COMPETITION RULES:
+
+# PREDATOR
+# nPred >= nPrey : survivePred
+# nPred < nPrey : birthPred
+# nPrey = 0 : deathPred
+
+# PREY
+# nPrey >= nPlant : birthPrey
+# nPrey < nPlant : survivePrey
+# nPrey > nPred : survivePrey
+# nPrey <= nPred : deathPrey
+# nPlant = 0 : deathPrey
+
+# PLANT
+# nPlant > nPrey : survivePlant
+# nPlant <= nPrey : deathPlant 
+# nPrey = 0 : birthPlant
+
+#------------------------------------------------------------------------------------------------
+
 class Engine(object):
     def __init__(self, population, map):
         self.state = population.state
@@ -135,10 +169,10 @@ class Engine(object):
         n = self.countNeighbors() 
         state = self.state
 
-        birth = (n == 3) & (state[1:-1,1:-1] == 0)
-        survive = ((n == 2) | (n == 3)) & (state[1:-1,1:-1] == 1) & (self.landIndex[1:-1,1:-1] == 1)
-        state[...] = 0
-        state[1:-1,1:-1][birth | survive] = 1
+        # birth = (n == 3) & (state[1:-1,1:-1] == 0)
+        # survive = ((n == 2) | (n == 3)) & (state[1:-1,1:-1] == 1) & (self.landIndex[1:-1,1:-1] == 1)
+        # state[...] = 0
+        # state[1:-1,1:-1][birth | survive] = 1
 
         # nBirth = np.sum(birth)
         # self.nBirth = nBirth
@@ -151,10 +185,10 @@ class Engine(object):
         n = self.countNeighbors() 
         state = self.state
 
-        birth = (n == 3) & (state[1:-1,1:-1] == 0)
-        survive = ((n == 2) | (n == 3)) & (state[1:-1,1:-1] == 1)& (self.landIndex[1:-1,1:-1] == 1)
-        state[...] = 0
-        state[1:-1,1:-1][birth | survive] = 1
+        # birth = (n == 3) & (state[1:-1,1:-1] == 0)
+        # survive = ((n == 2) | (n == 3)) & (state[1:-1,1:-1] == 1)& (self.landIndex[1:-1,1:-1] == 1)
+        # state[...] = 0
+        # state[1:-1,1:-1][birth | survive] = 1
 
         # nBirth = np.sum(birth)
         # self.nBirth = nBirth
@@ -167,10 +201,10 @@ class Engine(object):
         n = self.countNeighbors() 
         state = self.state
 
-        birth = (n == 3) & (state[1:-1,1:-1] == 0)
-        survive = ((n == 2) | (n == 3)) & (state[1:-1,1:-1] == 1) & (self.landIndex[1:-1,1:-1] == 1)
-        state[...] = 0
-        state[1:-1,1:-1][birth | survive] = 1 
+        # birth = (n == 3) & (state[1:-1,1:-1] == 0)
+        # survive = ((n == 2) | (n == 3)) & (state[1:-1,1:-1] == 1) & (self.landIndex[1:-1,1:-1] == 1)
+        # state[...] = 0
+        # state[1:-1,1:-1][birth | survive] = 1 
 
         # nBirth = np.sum(birth)
         # self.nBirth = nBirth
@@ -235,7 +269,7 @@ def animate(prey, predators, plants, map):
 
 def main():
 
-    island = Map(256,256)
+    island = Map(128,128)
 
     prey = Population(island, 'Prey')
     predators = Population(island, 'Predator')
